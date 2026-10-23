@@ -155,10 +155,43 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .linha h3 { font-size: clamp(28px, 2.6vw, 34px); font-weight: 400; letter-spacing: -.01em; }
 .linha p { font-size: 15px; line-height: 1.6; color: var(--ink-soft); transition: color .4s; }
 .linha:hover p, .linha:focus-visible p { color: #f1ece7; }
+.linha { min-height: 380px; }
 .linha .pe { margin-top: auto; display: flex; align-items: end; justify-content: space-between; gap: 12px; }
-.linha .mini { width: 76px; height: 76px; object-fit: cover; background: var(--branco); transition: transform .55s var(--suave); }
-.linha:hover .mini { transform: scale(1.12) rotate(-2deg); }
-.linha .ver { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; display: inline-flex; gap: 8px; }
+.linha .mini { width: auto; height: 150px; max-width: 58%; object-fit: contain; object-position: right bottom;
+  filter: drop-shadow(0 14px 16px rgba(29,29,27,.18)); transition: transform .6s var(--suave); transform-origin: bottom center; }
+.linha:hover .mini, .linha:focus-visible .mini { transform: translateY(-6px) scale(1.06); }
+.linha.todos { background: var(--preto); color: var(--areia); }
+.linha.todos .tipo { color: #a9ae8a; }
+.linha.todos p { color: #d9d0c9; }
+
+/* teste do cabelo */
+.teste { background: var(--verde); color: var(--branco); padding-block: clamp(72px, 10vw, 128px); overflow: hidden; }
+.teste .grade { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(36px, 6vw, 88px); align-items: center; }
+@media (max-width: 900px) { .teste .grade { grid-template-columns: 1fr; } }
+.teste .rotulo { color: var(--areia); }
+.teste h2 { font-size: clamp(36px, 5vw, 62px); font-weight: 300; margin: 14px 0 20px; }
+.teste h2 em { font-style: italic; color: var(--areia); }
+.teste .lead { font-size: clamp(17px, 1.6vw, 19px); max-width: 46ch; color: #f4eee9; }
+.passos { list-style: none; counter-reset: passo; margin: 32px 0; padding: 0; display: flex; flex-direction: column; gap: 0; border-top: 1px solid rgba(255,255,255,.25); }
+.passos li { counter-increment: passo; display: grid; grid-template-columns: 56px 1fr; gap: 16px; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.25); }
+.passos li::before { content: counter(passo, decimal-leading-zero); font-size: 28px; font-weight: 300; color: var(--areia); line-height: 1.2; }
+.passos b { display: block; font-size: 18px; font-weight: 600; }
+.passos span { color: #ece5df; font-size: 15px; }
+.selos-teste { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.selos-teste span { font-size: 13px; font-weight: 600; letter-spacing: .06em; border: 1px solid rgba(255,255,255,.55); padding: 6px 12px; }
+.demo { background: var(--creme); color: var(--preto); padding: clamp(22px, 3vw, 36px); display: flex; flex-direction: column; gap: 18px; box-shadow: 0 30px 60px rgba(29,29,27,.25); min-width: 0; }
+.demo .q { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--verde); }
+.demo .t { font-size: clamp(20px, 2.2vw, 26px); font-weight: 400; margin-top: -8px; }
+.demo .ops { display: flex; flex-wrap: wrap; gap: 8px; }
+.demo .ops span { border: 1px solid #d9d3c9; padding: 9px 14px; font-size: 15px; transition: background .4s, color .4s, border-color .4s; }
+.demo .ops span.sel { background: var(--verde); border-color: var(--verde); color: var(--branco); }
+.demo .barra { height: 3px; background: #e5dfd6; position: relative; overflow: hidden; }
+.demo .barra i { position: absolute; inset: 0 auto 0 0; width: 20%; background: var(--verde); transition: width .6s var(--suave); }
+.demo .res { display: flex; gap: 14px; align-items: center; border-top: 1px solid #e5dfd6; padding-top: 16px; opacity: .35; transition: opacity .6s; }
+.demo .res.pronto { opacity: 1; }
+.demo .res img { width: 64px; height: 64px; object-fit: contain; }
+.demo .res small { display: block; color: var(--grafite); font-size: 13px; }
+.linha .ver { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; display: inline-flex; gap: 8px; white-space: nowrap; flex: none; }
 .linha .ver .seta { transition: transform .35s var(--suave); }
 .linha:hover .ver .seta { transform: translateX(5px); }
 
@@ -302,6 +335,7 @@ footer .fim { margin-top: 44px; padding-top: 20px; border-top: 1px solid #3a3a36
     <a class="logo" href="#inicio" aria-label="Soul Professional"><img src="arquivos/logo-areia.png" alt="Soul Professional" width="156" height="40"></a>
     <nav aria-label="Seções">
       <a href="#linhas" data-t="nav_linhas">Linhas</a>
+      <a href="#teste" data-t="nav_teste">Teste do cabelo</a>
       <a href="#sem-formol" data-t="nav_formol">Sem formol</a>
       <a href="#historia" data-t="nav_historia">Nossa história</a>
       <a href="#mundo" data-t="nav_mundo">No mundo</a>
@@ -372,28 +406,52 @@ footer .fim { margin-top: 44px; padding-top: 20px; border-top: 1px solid #3a3a36
       <div class="lista-linhas">
         <a class="linha surge" href="https://lojasoulprofessional.com.br/gloss-protein/" target="_blank" rel="noopener">
           <span class="tipo" data-t="l1t">Hidratação profunda</span><h3>Gloss Protein</h3><p data-t="l1p">Shampoo e máscara para fios macios, leves e com brilho intenso.</p>
-          <span class="pe"><span class="ver" data-t="ver">Ver na loja <span class="seta" aria-hidden="true">→</span></span><img class="mini" src="arquivos/mini-gloss.jpg" alt="" width="76" height="76" loading="lazy"></span></a>
+          <span class="pe"><span class="ver" data-t="ver">Ver na loja <span class="seta" aria-hidden="true">→</span></span><img class="mini" src="arquivos/produto-gloss.png" alt="" loading="lazy"></span></a>
         <a class="linha surge d1" href="https://lojasoulprofessional.com.br/amazon-care/" target="_blank" rel="noopener">
           <span class="tipo" data-t="l2t">Proteína e nutrição</span><h3>Amazon Care</h3><p data-t="l2p">Hair Protein pré-shampoo e shampoo pós-química, para força e reposição.</p>
-          <span class="pe"><span class="ver" data-t="ver">Ver na loja <span class="seta" aria-hidden="true">→</span></span><img class="mini" src="arquivos/mini-amazon.jpg" alt="" width="76" height="76" loading="lazy"></span></a>
+          <span class="pe"><span class="ver" data-t="ver">Ver na loja <span class="seta" aria-hidden="true">→</span></span><img class="mini" src="arquivos/produto-amazon.png" alt="" loading="lazy"></span></a>
         <a class="linha surge d2" href="https://lojasoulprofessional.com.br/soul-clinic/" target="_blank" rel="noopener">
           <span class="tipo" data-t="l3t">Cronograma capilar</span><h3>Soul Clinic</h3><p data-t="l3p">Alecrim, Lavanda e Capim-limão: hidratação, nutrição e reconstrução.</p>
-          <span class="pe"><span class="ver" data-t="ver">Ver na loja <span class="seta" aria-hidden="true">→</span></span><img class="mini" src="arquivos/mini-clinic.jpg" alt="" width="76" height="76" loading="lazy"></span></a>
+          <span class="pe"><span class="ver" data-t="ver">Ver na loja <span class="seta" aria-hidden="true">→</span></span><img class="mini" src="arquivos/produto-clinic.png" alt="" loading="lazy"></span></a>
         <a class="linha surge d3" href="https://lojasoulprofessional.com.br/soul-blond/" target="_blank" rel="noopener">
           <span class="tipo" data-t="l4t">Cabelos loiros</span><h3>Soul Blond</h3><p data-t="l4p">Shampoo e máscara revitalizadores para loiros e descoloridos.</p>
-          <span class="pe"><span class="ver" data-t="ver">Ver na loja <span class="seta" aria-hidden="true">→</span></span><img class="mini" src="arquivos/mini-blond.jpg" alt="" width="76" height="76" loading="lazy"></span></a>
+          <span class="pe"><span class="ver" data-t="ver">Ver na loja <span class="seta" aria-hidden="true">→</span></span><img class="mini" src="arquivos/produto-blond.png" alt="" loading="lazy"></span></a>
         <a class="linha surge" href="https://lojasoulprofessional.com.br/acai-oil/" target="_blank" rel="noopener">
           <span class="tipo" data-t="l5t">Óleo reparador</span><h3>Gloss Açaí Oil</h3><p data-t="l5p">Extra brilho e acabamento de salão nas pontas.</p>
-          <span class="pe"><span class="ver" data-t="ver">Ver na loja <span class="seta" aria-hidden="true">→</span></span><img class="mini" src="arquivos/mini-acai.jpg" alt="" width="76" height="76" loading="lazy"></span></a>
+          <span class="pe"><span class="ver" data-t="ver">Ver na loja <span class="seta" aria-hidden="true">→</span></span><img class="mini" src="arquivos/produto-acai.png" alt="" loading="lazy"></span></a>
         <a class="linha surge d1" href="https://lojasoulprofessional.com.br/prn-soulplex/" target="_blank" rel="noopener">
           <span class="tipo" data-t="l6t">Proteção dos fios</span><h3>PRN Soulplex</h3><p data-t="l6p">Proteção, restauração e nutrição para fios danificados.</p>
-          <span class="pe"><span class="ver" data-t="ver">Ver na loja <span class="seta" aria-hidden="true">→</span></span><img class="mini" src="arquivos/mini-prn.jpg" alt="" width="76" height="76" loading="lazy"></span></a>
+          <span class="pe"><span class="ver" data-t="ver">Ver na loja <span class="seta" aria-hidden="true">→</span></span><img class="mini" src="arquivos/produto-prn.png" alt="" loading="lazy"></span></a>
         <a class="linha surge d2" href="https://lojasoulprofessional.com.br/leave-in/magic-ball/" target="_blank" rel="noopener">
           <span class="tipo" data-t="l7t">Leave-in e proteção térmica</span><h3>Magic Ball</h3><p data-t="l7p">Protege, hidrata e restaura, no cabelo seco ou úmido.</p>
-          <span class="pe"><span class="ver" data-t="ver">Ver na loja <span class="seta" aria-hidden="true">→</span></span><img class="mini" src="arquivos/mini-magic.jpg" alt="" width="76" height="76" loading="lazy"></span></a>
-        <a class="linha surge d3" href="https://lojasoulprofessional.com.br/consultor-de-cabelo/" target="_blank" rel="noopener">
-          <span class="tipo" data-t="l8t">Não sabe qual escolher?</span><h3 data-t="l8h">Teste do cabelo</h3><p data-t="l8p">Responda algumas perguntas e o consultor da loja indica a rotina certa para você.</p>
-          <span class="pe"><span class="ver" data-t="l8v">Fazer o teste <span class="seta" aria-hidden="true">→</span></span></span></a>
+          <span class="pe"><span class="ver" data-t="ver">Ver na loja <span class="seta" aria-hidden="true">→</span></span><img class="mini" src="arquivos/produto-magic.png" alt="" loading="lazy"></span></a>
+        <a class="linha todos surge d3" href="https://lojasoulprofessional.com.br/produtos/" target="_blank" rel="noopener">
+          <span class="tipo" data-t="l8t">Loja oficial</span><h3 data-t="l8h">Todos os produtos</h3><p data-t="l8p">Kits, tamanhos profissionais e toda a linha Soul Professional.</p>
+          <span class="pe"><span class="ver" data-t="l8v">Ver todos <span class="seta" aria-hidden="true">→</span></span></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="teste faixa" id="teste" aria-labelledby="titulo-teste">
+    <div class="miolo grade">
+      <div>
+        <span class="rotulo surge" data-t="t_rotulo">Teste do cabelo</span>
+        <h2 id="titulo-teste" class="surge d1" data-t="t_titulo">Descubra a rotina ideal <em>para o seu cabelo</em></h2>
+        <p class="lead surge d2" data-t="t_lead">Não sabe por onde começar? O consultor da loja oficial usa inteligência artificial para entender o seu cabelo e indicar os produtos <b>Soul Professional</b> certos para você.</p>
+        <ol class="passos surge d2">
+          <li><div><b data-t="t_p1">Responda 5 perguntas</b><span data-t="t_p1s">Tipo de fio, química, quantas vezes lava, o que mais incomoda e o que quer alcançar.</span></div></li>
+          <li><div><b data-t="t_p2">Envie uma foto, se quiser</b><span data-t="t_p2s">A foto é opcional e ajuda a deixar a indicação mais precisa.</span></div></li>
+          <li><div><b data-t="t_p3">Receba a sua rotina</b><span data-t="t_p3s">Os produtos indicados aparecem com foto, preço e link para comprar.</span></div></li>
+        </ol>
+        <div class="selos-teste surge d3"><span data-t="t_s1">Gratuito</span><span data-t="t_s2">Sem cadastro</span><span data-t="t_s3">Em poucos minutos</span></div>
+        <div class="acoes surge d3"><a class="botao b-branco" href="https://lojasoulprofessional.com.br/consultor-de-cabelo/" target="_blank" rel="noopener" data-t="t_botao">Fazer o teste do cabelo <span class="seta" aria-hidden="true">→</span></a></div>
+      </div>
+      <div class="demo surge d2" id="demo" aria-hidden="true">
+        <div class="barra"><i></i></div>
+        <span class="q" data-t="t_dq">Pergunta</span>
+        <span class="t" id="demo-pergunta">Como é o fio?</span>
+        <div class="ops" id="demo-opcoes"><span>Liso</span><span class="sel">Ondulado</span><span>Cacheado</span><span>Crespo</span></div>
+        <div class="res" id="demo-res"><img src="arquivos/produto-gloss.png" alt=""><div><b>Gloss Protein</b><small data-t="t_dr">Indicado para você</small></div></div>
       </div>
     </div>
   </section>
@@ -519,7 +577,7 @@ footer .fim { margin-top: 44px; padding-top: 20px; border-top: 1px solid #3a3a36
 var TEXTOS = {
   en: {
     previa: "New institutional website preview, version 4. Nothing has been published on soulprofessional.com.br. Atmosphere images created with AI, to be replaced by real photos.",
-    nav_linhas: "Lines", nav_formol: "Formaldehyde-free", nav_historia: "Our story", nav_mundo: "Worldwide", nav_prof: "Professionals", nav_contato: "Contact",
+    nav_linhas: "Lines", nav_teste: "Hair quiz", nav_formol: "Formaldehyde-free", nav_historia: "Our story", nav_mundo: "Worldwide", nav_prof: "Professionals", nav_contato: "Contact",
     loja: "Official store",
     ab_rotulo: "Professional hair care",
     ab_titulo: '<span class="p">Caring</span> <span class="p" style="animation-delay:.08s">for</span> <span class="p" style="animation-delay:.16s">your</span> <span class="p" style="animation-delay:.24s"><em>beauty</em></span> <span class="p" style="animation-delay:.32s">and</span> <span class="p" style="animation-delay:.40s"><em>soul.</em></span>',
@@ -540,7 +598,14 @@ var TEXTOS = {
     l5t: "Repairing oil", l5p: "Extra shine and a salon finish on the ends.",
     l6t: "Hair protection", l6p: "Protection, restoration and nutrition for damaged hair.",
     l7t: "Leave-in and heat protection", l7p: "Protects, hydrates and restores, on dry or damp hair.",
-    l8t: "Not sure which to choose?", l8h: "Hair quiz", l8p: "Answer a few questions and the store's consultant recommends the right routine for you.", l8v: 'Take the quiz <span class="seta" aria-hidden="true">→</span>',
+    l8t: "Official store", l8h: "All products", l8p: "Kits, professional sizes and the full Soul Professional range.", l8v: 'See all <span class="seta" aria-hidden="true">→</span>',
+    t_rotulo: "Hair quiz", t_titulo: "Find the ideal routine <em>for your hair</em>",
+    t_lead: "Not sure where to start? The official store's consultant uses artificial intelligence to understand your hair and recommend the right <b>Soul Professional</b> products for you.",
+    t_p1: "Answer 5 questions", t_p1s: "Hair type, chemical treatments, how often you wash it, what bothers you most and what you want to achieve.",
+    t_p2: "Send a photo, if you like", t_p2s: "The photo is optional and helps make the recommendation more precise.",
+    t_p3: "Get your routine", t_p3s: "The recommended products appear with photo, price and a link to buy.",
+    t_s1: "Free", t_s2: "No sign-up", t_s3: "In a few minutes", t_botao: 'Take the hair quiz <span class="seta" aria-hidden="true">→</span>',
+    t_dq: "Question", t_dr: "Recommended for you",
     o_rotulo: "From origin to formula", o_titulo: "From Singapore <em>to the Amazon</em>",
     o_p1: "On her travels, founder <b>Ana Celia Mauro</b> discovered some of the best hair spas in the world in Singapore and fell in love with camellia oil, a legendary ingredient used by geishas.",
     o_p2: "After extensive research, she found in the Amazon the ideal ingredients to nourish and preserve the health of hair and scalp, with little chemistry: <b>Amazonian butters, proteins and amino acids</b>.",
@@ -569,7 +634,7 @@ var TEXTOS = {
   },
   es: {
     previa: "Vista previa del nuevo sitio institucional, versión 4. Nada se ha publicado en soulprofessional.com.br. Imágenes de ambiente creadas con IA, a reemplazar por fotos reales.",
-    nav_linhas: "Líneas", nav_formol: "Sin formol", nav_historia: "Nuestra historia", nav_mundo: "En el mundo", nav_prof: "Profesionales", nav_contato: "Contacto",
+    nav_linhas: "Líneas", nav_teste: "Test del cabello", nav_formol: "Sin formol", nav_historia: "Nuestra historia", nav_mundo: "En el mundo", nav_prof: "Profesionales", nav_contato: "Contacto",
     loja: "Tienda oficial",
     ab_rotulo: "Cosmética capilar profesional",
     ab_titulo: '<span class="p">Cuidando</span> <span class="p" style="animation-delay:.08s">tu</span> <span class="p" style="animation-delay:.16s"><em>belleza</em></span> <span class="p" style="animation-delay:.24s">y</span> <span class="p" style="animation-delay:.32s">tu</span> <span class="p" style="animation-delay:.40s"><em>alma.</em></span>',
@@ -590,7 +655,14 @@ var TEXTOS = {
     l5t: "Aceite reparador", l5p: "Brillo extra y acabado de salón en las puntas.",
     l6t: "Protección del cabello", l6p: "Protección, restauración y nutrición para el cabello dañado.",
     l7t: "Leave-in y protección térmica", l7p: "Protege, hidrata y restaura, en el cabello seco o húmedo.",
-    l8t: "¿No sabes cuál elegir?", l8h: "Test del cabello", l8p: "Responde algunas preguntas y el consultor de la tienda te indica la rutina ideal.", l8v: 'Hacer el test <span class="seta" aria-hidden="true">→</span>',
+    l8t: "Tienda oficial", l8h: "Todos los productos", l8p: "Kits, tamaños profesionales y toda la línea Soul Professional.", l8v: 'Ver todos <span class="seta" aria-hidden="true">→</span>',
+    t_rotulo: "Test del cabello", t_titulo: "Descubre la rutina ideal <em>para tu cabello</em>",
+    t_lead: "¿No sabes por dónde empezar? El consultor de la tienda oficial usa inteligencia artificial para entender tu cabello e indicarte los productos <b>Soul Professional</b> adecuados.",
+    t_p1: "Responde 5 preguntas", t_p1s: "Tipo de cabello, química, cuántas veces lo lavas, qué más te molesta y qué quieres lograr.",
+    t_p2: "Envía una foto, si quieres", t_p2s: "La foto es opcional y ayuda a que la recomendación sea más precisa.",
+    t_p3: "Recibe tu rutina", t_p3s: "Los productos indicados aparecen con foto, precio y enlace para comprar.",
+    t_s1: "Gratis", t_s2: "Sin registro", t_s3: "En pocos minutos", t_botao: 'Hacer el test del cabello <span class="seta" aria-hidden="true">→</span>',
+    t_dq: "Pregunta", t_dr: "Indicado para ti",
     o_rotulo: "Del origen a las fórmulas", o_titulo: "De Singapur <em>a la Amazonía</em>",
     o_p1: "En sus viajes, la fundadora <b>Ana Celia Mauro</b> conoció en Singapur algunos de los mejores spas capilares del mundo y se enamoró del aceite de camelia, ingrediente legendario usado por las geishas.",
     o_p2: "Tras una larga investigación, encontró en la Amazonía los insumos ideales para nutrir y preservar la salud del cabello y del cuero cabelludo, con poca química: <b>mantecas amazónicas, proteínas y aminoácidos</b>.",
@@ -716,6 +788,31 @@ var PAISES = [
     mapa.insertAdjacentHTML('beforeend', '<div class="sem-mapa">O mapa não carregou. A lista de países está logo abaixo.</div>');
   }
 
+  // demonstração do teste do cabelo: as perguntas passam sozinhas enquanto a seção está à vista
+  var DEMO = {
+    pt: [["Como é o fio?", ["Liso", "Ondulado", "Cacheado", "Crespo"], 1], ["Passou por química?", ["Nenhuma", "Coloração", "Descoloração", "Alisamento"], 2],
+         ["Quantas vezes lava por semana?", ["1 vez", "2 a 3 vezes", "4 ou mais"], 1], ["O que mais incomoda?", ["Ressecamento", "Frizz", "Quebra", "Falta de brilho"], 0],
+         ["O que você quer alcançar?", ["Hidratar", "Nutrir", "Reconstruir", "Mais brilho"], 0]],
+    en: [["What is the hair like?", ["Straight", "Wavy", "Curly", "Coily"], 1], ["Any chemical treatment?", ["None", "Color", "Bleaching", "Straightening"], 2],
+         ["How many times a week is it washed?", ["Once", "2 to 3 times", "4 or more"], 1], ["What bothers you most?", ["Dryness", "Frizz", "Breakage", "Lack of shine"], 0],
+         ["What do you want to achieve?", ["Hydrate", "Nourish", "Rebuild", "More shine"], 0]],
+    es: [["¿Cómo es el cabello?", ["Liso", "Ondulado", "Rizado", "Afro"], 1], ["¿Pasó por química?", ["Ninguna", "Coloración", "Decoloración", "Alisado"], 2],
+         ["¿Cuántas veces se lava por semana?", ["1 vez", "2 a 3 veces", "4 o más"], 1], ["¿Qué más molesta?", ["Resequedad", "Frizz", "Quiebre", "Falta de brillo"], 0],
+         ["¿Qué quieres lograr?", ["Hidratar", "Nutrir", "Reconstruir", "Más brillo"], 0]]
+  };
+  var demoPasso = 0, demoTimer = null, demoBarra = document.querySelector('#demo .barra i'), demoRes = document.getElementById('demo-res');
+  function demoMostrar() {
+    var p = DEMO[idioma][demoPasso];
+    document.getElementById('demo-pergunta').textContent = p[0];
+    var ops = document.getElementById('demo-opcoes'); ops.innerHTML = '';
+    p[1].forEach(function (texto) { var s = document.createElement('span'); s.textContent = texto; ops.appendChild(s); });
+    demoBarra.style.width = ((demoPasso + 1) / DEMO[idioma].length * 100) + '%';
+    setTimeout(function () { var alvo = ops.children[p[2]]; if (alvo) alvo.classList.add('sel'); }, 700);
+    demoRes.classList.toggle('pronto', demoPasso === DEMO[idioma].length - 1);
+  }
+  function demoAvancar() { demoPasso = (demoPasso + 1) % DEMO.pt.length; demoMostrar(); demoTimer = setTimeout(demoAvancar, demoPasso === DEMO.pt.length - 1 ? 3600 : 2000); }
+  if (!calmo) quandoVisivel([document.getElementById('demo')], function () { demoMostrar(); demoTimer = setTimeout(demoAvancar, 2000); }, { threshold: 0.4 });
+
   // idiomas
   var originais = {};
   document.querySelectorAll('[data-t]').forEach(function (el, i) { el.setAttribute('data-i', i); originais[i] = el.innerHTML; });
@@ -728,6 +825,8 @@ var PAISES = [
     });
     document.querySelectorAll('[data-idioma]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-idioma') === novo)); });
     montarLista();
+    if (demoTimer) demoMostrar(); else { var p0 = DEMO[novo][0]; document.getElementById('demo-pergunta').textContent = p0[0];
+      document.getElementById('demo-opcoes').innerHTML = p0[1].map(function (t, i) { return '<span' + (i === p0[2] ? ' class="sel"' : '') + '>' + t + '</span>'; }).join(''); }
     try { localStorage.setItem('soul-idioma', novo); } catch (e) {}
   }
   document.querySelectorAll('[data-idioma]').forEach(function (b) { b.addEventListener('click', function () { trocar(b.getAttribute('data-idioma')); }); });
